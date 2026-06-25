@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>A4 合版工具</title>
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="sidebar">
+        <div class="panel">
+          <p class="eyebrow">A4 合版工具</p>
+          <h1>两张 A4 放进一张 A4</h1>
+          <p class="intro">
+            上传两份 PDF 或图片，先按预设摆进 A4 画板，再拖动、缩放、旋转，最后导出成单页 PDF。
+          </p>
+        </div>
+
+        <div class="panel controls-panel">
+          <div class="section-title">1. 上传文件</div>
+          <label class="file-field">
+            <span>页面 1</span>
+            <input id="file-input-0" type="file" accept=".pdf,image/*" />
+          </label>
+          <label class="file-field">
+            <span>页面 2</span>
+            <input id="file-input-1" type="file" accept=".pdf,image/*" />
+          </label>
+          <p class="hint">PDF 默认取第一页。</p>
+        </div>
+
+        <div class="panel controls-panel">
+          <div class="section-title">2. 纸张与预设</div>
+          <div class="button-row">
+            <button class="secondary" id="sheet-portrait">A4 竖版</button>
+            <button class="secondary" id="sheet-landscape">A4 横版</button>
+          </div>
+          <div class="button-row">
+            <button class="secondary" id="preset-half">上下半页</button>
+            <button class="secondary" id="preset-a5">A5 并排</button>
+          </div>
+          <div class="button-row">
+            <button class="secondary" id="preset-reset">重置位置</button>
+          </div>
+        </div>
+
+        <div class="panel controls-panel">
+          <div class="section-title">3. 当前页面</div>
+          <div id="page-controls" class="page-controls"></div>
+        </div>
+
+        <div class="panel controls-panel">
+          <div class="section-title">4. 导出</div>
+          <button class="primary export-button" id="export-pdf">导出 PDF</button>
+          <p class="hint">导出为单页 A4 PDF，使用你当前在画板里的布局。</p>
+          <div id="status" class="status">请先上传两页文件。</div>
+        </div>
+      </aside>
+
+      <main class="workspace">
+        <div class="workspace-header">
+          <div>
+            <p class="eyebrow">可拖拽画板</p>
+            <h2>在 A4 画板里微调位置</h2>
+          </div>
+          <div class="legend">
+            <span><i class="dot dot-1"></i>页面 1</span>
+            <span><i class="dot dot-2"></i>页面 2</span>
+          </div>
+        </div>
+
+        <div class="stage-frame">
+          <div class="stage" id="stage">
+            <div class="stage-grid"></div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <template id="page-control-template">
+      <section class="page-card">
+        <div class="page-card-header">
+          <div>
+            <div class="page-name"></div>
+            <div class="page-meta"></div>
+          </div>
+          <button class="secondary select-button">选中</button>
+        </div>
+        <label class="range-field">
+          <span>缩放</span>
+          <input class="scale-input" type="range" min="20" max="120" step="1" />
+          <span class="scale-value"></span>
+        </label>
+        <div class="button-row">
+          <button class="secondary rotate-button">旋转 90°</button>
+          <button class="secondary front-button">置顶</button>
+        </div>
+        <div class="button-row">
+          <button class="danger delete-button">删除页面</button>
+        </div>
+      </section>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
